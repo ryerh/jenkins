@@ -2,7 +2,7 @@
 #
 # Build jenkins image with docker excutable
 #
-set -ex
+set -x
 
 DOCKER_VERSION="17.03"
 JENKINS_BASE_IMAGE="jenkins:alpine"

@@ -15,5 +15,5 @@ fi
 
 cd docker/$DOCKER_VERSION
 
-sed "s/FROM .*/FROM $JENKINS_BASE_IMAGE/" Dockerfile | \
+sed "s/FROM .*/FROM $JENKINS_BASE_IMAGE\nUSER root/" Dockerfile | \
   docker build -t $BUILD_IMAGE_NAME -

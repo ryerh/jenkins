@@ -14,6 +14,6 @@ if [[ ! -e docker/$DOCKER_VERSION ]]; then
 fi
 
 cd docker/$DOCKER_VERSION
-
-sed "s/FROM .*/FROM $JENKINS_BASE_IMAGE\nUSER root/" Dockerfile | \
-  docker build -t $BUILD_IMAGE_NAME -
+sed "s/FROM .*/FROM $JENKINS_BASE_IMAGE\nUSER root/" Dockerfile > Dockerfile.tmp
+docker build -t $BUILD_IMAGE_NAME -f Dockerfile.tmp .
+rm -f Dockerfile.tmp

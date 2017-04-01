@@ -5,7 +5,7 @@
 set -x
 
 DOCKER_VERSION="17.03"
-JENKINS_BASE_IMAGE="jenkins:alpine"
+JENKINS_BASE_IMAGE="jenkinsci/blueocean"
 BUILD_IMAGE_NAME="jenkins-docker"
 
 if [[ ! -e docker/$DOCKER_VERSION ]]; then

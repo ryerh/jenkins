@@ -5,7 +5,8 @@
 set -x
 
 cat << 'EOF' | docker build -t jenkins-docker-simple -
-FROM jenkins:alpine
+FROM jenkinsci/blueocean
 USER root
 RUN apk add --no-cache docker
+USER jenkins
 EOF

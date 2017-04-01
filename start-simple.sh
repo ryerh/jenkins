@@ -2,7 +2,7 @@
 #
 # Build jenkins image with docker excutable
 #
-set -x
+set -ex
 
 docker run $@ \
   -p 8080:8080 \

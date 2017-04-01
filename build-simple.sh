@@ -2,11 +2,16 @@
 #
 # Build jenkins image with docker excutable
 #
-set -x
+set -ex
 
 cat << 'EOF' | docker build -t jenkins-docker-simple -
 FROM jenkinsci/blueocean
+
 USER root
-RUN apk add --no-cache docker
+
+RUN set -ex \
+  && apk add --no-cache docker py-pip \
+  && pip install docker-compose
+
 USER jenkins
 EOF

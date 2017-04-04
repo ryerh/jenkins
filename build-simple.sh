@@ -12,6 +12,4 @@ USER root
 RUN set -ex \
   && apk add --no-cache docker py-pip \
   && pip install docker-compose
-
-USER jenkins
 EOF

@@ -10,6 +10,6 @@ docker run $@ \
   -it \
   -p 8080:8080 \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v /var/jenkins_home:/var/run/jenkins_home \
+  -v /var/jenkins_home:/var/jenkins_home \
   --name jenkins-docker-simple \
   jenkins-docker-simple

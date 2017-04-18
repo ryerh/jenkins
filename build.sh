@@ -4,16 +4,23 @@
 #
 set -ex
 
-DOCKER_VERSION="17.03"
-JENKINS_BASE_IMAGE="jenkinsci/blueocean"
-BUILD_IMAGE_NAME="jenkins-docker"
+cat << 'EOF' | docker build -t jenkins-docker -
+FROM jenkinsci/blueocean
 
-if [[ ! -e docker/$DOCKER_VERSION ]]; then
-  git submodule init
-  git submodule update
-fi
+ENV DOCKER_BUCKET get.docker.com
+ENV DOCKER_VERSION 17.04.0-ce
+ENV DOCKER_SHA256 c52cff62c4368a978b52e3d03819054d87bcd00d15514934ce2e0e09b99dd100
 
-cd docker/$DOCKER_VERSION
-sed "s/FROM .*/FROM $JENKINS_BASE_IMAGE\nUSER root/" Dockerfile > Dockerfile.tmp
-docker build -t $BUILD_IMAGE_NAME -f Dockerfile.tmp .
-rm -f Dockerfile.tmp
+USER root
+
+RUN set -x \
+  && apk add --no-cache ca-certificates curl openssl py-pip \
+  && curl -fSL "https://${DOCKER_BUCKET}/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz" -o docker.tgz \
+  && echo "${DOCKER_SHA256} *docker.tgz" | sha256sum -c - \
+  && tar -xzvf docker.tgz \
+  && mv docker/* /usr/local/bin/ \
+  && rmdir docker \
+  && rm docker.tgz \
+  && docker -v \
+  && pip install docker-compose
+EOF

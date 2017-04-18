@@ -14,13 +14,19 @@ ENV DOCKER_SHA256 c52cff62c4368a978b52e3d03819054d87bcd00d15514934ce2e0e09b99dd1
 USER root
 
 RUN set -x \
+  && echo https://mirrors.aliyun.com/alpine/v3.5/main > /etc/apk/repositories \
+  && echo https://mirrors.aliyun.com/alpine/v3.5/community >> /etc/apk/repositories \
+
   && apk add --no-cache ca-certificates curl openssl py-pip \
+
+  && pip install docker-compose \
+
   && curl -fSL "https://${DOCKER_BUCKET}/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz" -o docker.tgz \
   && echo "${DOCKER_SHA256} *docker.tgz" | sha256sum -c - \
   && tar -xzvf docker.tgz \
   && mv docker/* /usr/local/bin/ \
   && rmdir docker \
   && rm docker.tgz \
-  && docker -v \
-  && pip install docker-compose
+  && docker -v
+
 EOF

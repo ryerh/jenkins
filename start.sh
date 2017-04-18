@@ -11,6 +11,5 @@ docker run $@ \
   -p 8080:8080 \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v /var/jenkins_home:/var/jenkins_home \
-  --name jenkins-docker-simple \
-  jenkins-docker \
-  tini -- /usr/local/bin/jenkins.sh
+  --name jenkins-docker \
+  jenkins-docker
